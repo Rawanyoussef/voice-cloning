@@ -16,8 +16,21 @@ WORKDIR /app
 
 # نسخ وتثبيت المتطلبات
 COPY requirements.txt .
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+
+# تحديث pip وتثبيت wheel
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel
+
+# تثبيت المكتبات على مراحل لتجنب مشاكل التبعيات
+RUN pip install --no-cache-dir numpy==1.24.3 scipy==1.11.3
+
+# تثبيت PyTorch (CPU version)
+RUN pip install --no-cache-dir \
+    torch==2.1.0+cpu \
+    torchaudio==2.1.0+cpu \
+    --extra-index-url https://download.pytorch.org/whl/cpu
+
+# تثبيت باقي المكتبات
+RUN pip install --no-cache-dir -r requirements.txt
 
 # نسخ الكود
 COPY run_tts.py .
@@ -33,3 +46,4 @@ ENV COQUI_TOS_AGREED=1
 
 # تشغيل السكريبت
 CMD ["python", "run_tts.py"]
+
