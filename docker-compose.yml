@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  voice-cloning:
+    build: .
+    container_name: tts-voice-cloning
+    volumes:
+      # ربط مجلد input للملفات الصوتية المرجعية
+      - ./input:/app/input
+      # ربط مجلد output للملفات المولدة
+      - ./output:/app/output
+      # ربط cache لتخزين النماذج وعدم تحميلها كل مرة
+      - tts-cache:/root/.local/share/tts
+    environment:
+      - COQUI_TOS_AGREED=1
+      - PYTHONUNBUFFERED=1
+    # يمكن إزالة الـ ports إذا لم تكن تحتاج لخدمة API
+     ports:
+      - "9500:9500"
+
+volumes:
+  tts-cache:
+    driver: local
