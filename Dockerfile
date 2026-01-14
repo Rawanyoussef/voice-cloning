@@ -20,14 +20,17 @@ COPY requirements.txt .
 # تحديث pip وتثبيت wheel
 RUN pip install --no-cache-dir --upgrade pip setuptools wheel
 
-# تثبيت المكتبات على مراحل لتجنب مشاكل التبعيات
-RUN pip install --no-cache-dir numpy==1.24.3 scipy==1.11.3
+# تثبيت numpy الإصدار المطلوب أولاً
+RUN pip install --no-cache-dir numpy==1.22.0
 
 # تثبيت PyTorch (CPU version)
 RUN pip install --no-cache-dir \
     torch==2.1.0+cpu \
     torchaudio==2.1.0+cpu \
     --extra-index-url https://download.pytorch.org/whl/cpu
+
+# تثبيت scipy
+RUN pip install --no-cache-dir scipy==1.10.1
 
 # تثبيت باقي المكتبات
 RUN pip install --no-cache-dir -r requirements.txt
@@ -46,4 +49,5 @@ ENV COQUI_TOS_AGREED=1
 
 # تشغيل السكريبت
 CMD ["python", "run_tts.py"]
+
 
