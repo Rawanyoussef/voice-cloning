@@ -8,7 +8,7 @@ TTS==0.22.0
 
 # 3. Numpy
 # بنثبته على النسخة دي عشان هي أكتر نسخة مستقرة مع Python 3.10 ومكتبات الصوت
-numpy==1.23.5
+numpy==1.22
 
 # 4. Utilities (أدوات مساعدة للنصوص والملفات)
 inflect==7.0.0
@@ -18,5 +18,6 @@ huggingface-hub
 packaging
 filelock
 fsspec
+
 
 
