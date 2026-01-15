@@ -16,78 +16,78 @@ def main():
     print("🎙️  Voice Cloning - Coqui TTS")
     print("=" * 60)
     
-    # المسارات
+    # Paths
     input_dir = Path("/app/input")
     output_dir = Path("/app/output")
     
-    # التحقق من وجود المجلدات
-    print(f"\n🔍 التحقق من المجلدات...")
-    print(f"📁 مجلد Input موجود: {input_dir.exists()}")
-    print(f"📁 مجلد Output موجود: {output_dir.exists()}")
+    # Check directories
+    print(f"\n🔍 Checking directories...")
+    print(f"📁 Input directory exists: {input_dir.exists()}")
+    print(f"📁 Output directory exists: {output_dir.exists()}")
     
-    # إنشاء مجلد output إذا لم يكن موجوداً
+    # Create output directory if it does not exist
     output_dir.mkdir(parents=True, exist_ok=True)
     
-    # عرض محتويات مجلد input
+    # List input directory contents
     if input_dir.exists():
         all_files = list(input_dir.glob("*"))
-        print(f"\n📋 محتويات مجلد input:")
+        print(f"\n📋 Input directory contents:")
         if all_files:
             for f in all_files:
                 print(f"   - {f.name} ({f.suffix})")
         else:
-            print("   (المجلد فارغ)")
+            print("   (Directory is empty)")
     
-    # البحث عن ملف صوتي في مجلد input
+    # Search for WAV file in input directory
     audio_files = list(input_dir.glob("*.wav"))
     
     if not audio_files:
-        print("\n❌ خطأ: لم يتم العثور على ملف .wav في مجلد input")
-        print("📝 الرجاء وضع ملف صوتي بصيغة WAV في مجلد input")
-        print("\n💡 نصيحة: تأكد من أن:")
-        print("   1. الملف بصيغة .wav (وليس .mp3 أو .m4a)")
-        print("   2. الملف موجود في مجلد input/ في نفس مجلد المشروع")
-        print("   3. Docker قادر على الوصول للمجلد (تحقق من الـ volume mounting)")
+        print("\n❌ Error: No .wav file found in input directory")
+        print("📝 Please place a WAV audio file inside the input folder")
+        print("\n💡 Tips:")
+        print("   1. File must be .wav (not .mp3 or .m4a)")
+        print("   2. File must be inside input/ directory")
+        print("   3. Ensure Docker volume mounting is correct")
         sys.exit(1)
     
     speaker_wav = str(audio_files[0])
-    print(f"\n✅ تم العثور على الملف الصوتي: {audio_files[0].name}")
-    print(f"📊 حجم الملف: {audio_files[0].stat().st_size / 1024:.2f} KB")
+    print(f"\n✅ Audio file found: {audio_files[0].name}")
+    print(f"📊 File size: {audio_files[0].stat().st_size / 1024:.2f} KB")
     
-    # النص المراد تحويله لصوت
+    # Text to be converted to speech
     text = """
     مرحباً، هذا اختبار لتقنية استنساخ الصوت باستخدام الذكاء الاصطناعي.
     النظام يقوم بتوليد صوت جديد بناءً على العينة الصوتية المرجعية.
     """
     
-    print("\n📝 النص المراد تحويله:")
+    print("\n📝 Text to synthesize:")
     print(text.strip())
     
-    # تحميل الموديل
-    print("\n⏳ جاري تحميل الموديل...")
-    print("ℹ️  هذه العملية قد تستغرق عدة دقائق في المرة الأولى")
-    print("📜 الموافقة التلقائية على الترخيص غير التجاري (CPML)")
+    # Load model
+    print("\n⏳ Loading model...")
+    print("ℹ️  This may take several minutes on first run")
+    print("📜 Automatically accepting non-commercial license (CPML)")
     
     try:
-        # تعيين متغير بيئة للموافقة التلقائية
+        # Set environment variable to auto-accept license
         os.environ['COQUI_TOS_AGREED'] = '1'
         
         tts = TTS(
             model_name="tts_models/multilingual/multi-dataset/xtts_v2",
-            progress_bar=False,  # تعطيل progress bar لتجنب مشاكل التفاعل
-            gpu=False  # استخدام CPU (يمكن تغييره لـ True إذا كان GPU متاحاً)
+            progress_bar=False,  # Disable progress bar to avoid interaction issues
+            gpu=False  # Use CPU (set to True if GPU is available)
         )
-        print("✅ تم تحميل الموديل بنجاح")
+        print("✅ Model loaded successfully")
     except Exception as e:
-        print(f"❌ خطأ في تحميل الموديل: {str(e)}")
+        print(f"❌ Error loading model: {str(e)}")
         import traceback
         traceback.print_exc()
         sys.exit(1)
     
-    # توليد الصوت
+    # Generate speech
     output_file = output_dir / "generated_voice.wav"
-    print(f"\n🎵 جاري توليد الصوت...")
-    print(f"⚙️  معالجة النص باستخدام الصوت المرجعي...")
+    print(f"\n🎵 Generating speech...")
+    print(f"⚙️  Processing text using reference voice...")
     
     try:
         tts.tts_to_file(
@@ -97,25 +97,25 @@ def main():
             language="ar"
         )
         
-        # التحقق من إنشاء الملف
+        # Verify output file creation
         if output_file.exists():
-            print(f"✅ تم توليد الملف الصوتي بنجاح!")
-            print(f"📂 الملف محفوظ في: output/generated_voice.wav")
-            print(f"📊 حجم الملف: {output_file.stat().st_size / 1024:.2f} KB")
+            print(f"✅ Audio file generated successfully!")
+            print(f"📂 File saved at: output/generated_voice.wav")
+            print(f"📊 File size: {output_file.stat().st_size / 1024:.2f} KB")
         else:
-            print(f"⚠️  تحذير: الملف لم يتم إنشاؤه!")
+            print(f"⚠️  Warning: Output file was not created!")
             
     except Exception as e:
-        print(f"❌ خطأ في توليد الصوت: {str(e)}")
+        print(f"❌ Error generating audio: {str(e)}")
         import traceback
         traceback.print_exc()
         sys.exit(1)
     
     print("\n" + "=" * 60)
-    print("✨ اكتمل المشروع بنجاح!")
+    print("✨ Process completed successfully!")
     print("=" * 60)
-    print("\n💡 لتغيير النص، قم بتعديل متغير 'text' في ملف run_tts.py")
-    print("💡 لاستخدام صوت مرجعي مختلف، استبدل الملف في مجلد input/")
+    print("\n💡 To change the text, edit the 'text' variable in run_tts.py")
+    print("💡 To use a different reference voice, replace the file in input/")
 
 if __name__ == "__main__":
     main()
