@@ -54,12 +54,12 @@ def main():
     print(f"\n✅ Audio file found: {audio_files[0].name}")
     print(f"📊 File size: {audio_files[0].stat().st_size / 1024:.2f} KB")
     
-    # Text to be converted to speech (very casual Egyptian Arabic)
+    # Text to be converted to speech
     text = """ أهلاً بيك،
 أنا بحب أتكلم بهدوء وبطريقة طبيعية، من غير أي تمثيل أو مبالغة.
 الكلام ده مجرد تجربة صوت، علشان نختبر جودة التسجيل ونشوف الصوت هيطلع عامل إزاي.
 لو سامعني كويس، يبقى كل حاجة تمام ونقدر نكمّل باقي الخطوات بسهولة.
-شكرًا ليك، ويومك جميل.   
+شكرًا ليك، ويومك جميل.
 """
     
     print("\n📝 Text to synthesize:")
@@ -71,13 +71,12 @@ def main():
     print("📜 Automatically accepting non-commercial license (CPML)")
     
     try:
-        # Set environment variable to auto-accept license
         os.environ['COQUI_TOS_AGREED'] = '1'
         
         tts = TTS(
             model_name="tts_models/multilingual/multi-dataset/xtts_v2",
-            progress_bar=False,  # Disable progress bar to avoid interaction issues
-            gpu=False  # Use CPU (set to True if GPU is available)
+            progress_bar=False,
+            gpu=False
         )
         print("✅ Model loaded successfully")
     except Exception as e:
@@ -93,13 +92,17 @@ def main():
     
     try:
         tts.tts_to_file(
-            text=text.strip(),
-            file_path=str(output_file),
-            speaker_wav=speaker_wav,
-            language="ar"
-        )
-        
-        # Verify output file creation
+    text=text.strip(),
+    file_path=str(output_file),
+    speaker_wav=speaker_wav,
+    language="ar",
+    split_sentences=False,
+    temperature=0.65,
+    repetition_penalty=2.0,
+    top_p=0.85,
+    top_k=50,
+    sound_norm_refs=True  # 🔹 مفيش تأثير على الـ API إلا تحسين جودة الصوت
+)     
         if output_file.exists():
             print(f"✅ Audio file generated successfully!")
             print(f"📂 File saved at: output/generated_voice.wav")
@@ -121,10 +124,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
