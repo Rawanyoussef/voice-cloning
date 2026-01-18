@@ -104,7 +104,7 @@ def main():
             # 🔥 Fast & Natural
             split_sentences=true,     # أهم حاجة
             temperature=0.55,          # أقل = أسرع
-            repetition_penalty=1.05,   # يمنع التكرار من غير بطء
+            repetition_penalty=1.08,   # يمنع التكرار من غير بطء
             length_penalty=0.9,        # ↓ السرعة هنا
             top_p=0.9,
             top_k=40,
@@ -132,4 +132,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
