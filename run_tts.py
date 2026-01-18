@@ -101,13 +101,13 @@ def main():
             speaker_wav=speaker_wav,
             language="ar",
 
-            # --- الإعدادات السحرية ---
-            split_sentences=True,
-            temperature=0.75,
-            repetition_penalty=1.0,
-            length_penalty=1.0,
-            top_p=0.85,
-            top_k=50,
+            # 🔥 Fast & Natural
+            split_sentences=False,     # أهم حاجة
+            temperature=0.55,          # أقل = أسرع
+            repetition_penalty=1.05,   # يمنع التكرار من غير بطء
+            length_penalty=0.9,        # ↓ السرعة هنا
+            top_p=0.9,
+            top_k=40,
         )
 
         if output_file.exists():
