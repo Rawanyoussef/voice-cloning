@@ -103,4 +103,29 @@ def main():
             split_sentences=True,       # ضروري عشان ياخد نفس بين الجمل
             temperature=0.6,            # أقل = أسرع، أعلى = تعبير أكثر
             repetition_penalty=1.05,    # يمنع تكرار الحروف أو الكلمات
-            length_penalty=0.95,        # يقلل من بطء الكلام_
+            length_penalty=0.95,        # يقلل من بطء الكلام بدون فقدان الطابع الطبيعي
+            top_p=0.9,
+            top_k=40,
+            sound_norm_refs=True        # تحسين جودة الصوت فقط
+        )
+        if output_file.exists():
+            print(f"✅ Audio file generated successfully!")
+            print(f"📂 File saved at: output/generated_voice.wav")
+            print(f"📊 File size: {output_file.stat().st_size / 1024:.2f} KB")
+        else:
+            print(f"⚠️  Warning: Output file was not created!")
+            
+    except Exception as e:
+        print(f"❌ Error generating audio: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        sys.exit(1)
+    
+    print("\n" + "=" * 60)
+    print("✨ Process completed successfully!")
+    print("=" * 60)
+    print("\n💡 To change the text, edit the 'text' variable in run_tts.py")
+    print("💡 To use a different reference voice, replace the file in input/")
+
+if __name__ == "__main__":
+    main()
