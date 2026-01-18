@@ -100,8 +100,8 @@ def main():
             speaker_wav=speaker_wav,
             language="ar",
             split_sentences=False,
-            temperature=0.65,
-            repetition_penalty=2.0,
+            temperature=0.7,
+            repetition_penalty=1.3,
             top_p=0.85,
             top_k=50,
             sound_norm_refs=True  # 🔹 مفيش تأثير على الـ API إلا تحسين جودة الصوت
@@ -127,4 +127,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
