@@ -54,8 +54,8 @@ def main():
     print(f"\n✅ Audio file found: {audio_files[0].name}")
     print(f"📊 File size: {audio_files[0].stat().st_size / 1024:.2f} KB")
     
-    # Text to be converted to speech
-text = """
+    # Text to be converted to speech (عامية مصرية بدون تشكيل)
+    text = """
 مساء الخير، ازيك؟
 خليني اقولك ان الكلام اللي سامعه دلوقتي معمول بهدوء، وبنبرة طبيعية جدا.
 مفيش تمثيل، ولا ضغط على الصوت، كله كلام عادي زي أي مكالمة يومية.
@@ -94,17 +94,17 @@ text = """
     
     try:
         tts.tts_to_file(
-    text=text.strip(),
-    file_path=str(output_file),
-    speaker_wav=speaker_wav,
-    language="ar",
-    split_sentences=False,
-    temperature=0.65,
-    repetition_penalty=2.0,
-    top_p=0.85,
-    top_k=50,
-    sound_norm_refs=True  # 🔹 مفيش تأثير على الـ API إلا تحسين جودة الصوت
-)     
+            text=text.strip(),
+            file_path=str(output_file),
+            speaker_wav=speaker_wav,
+            language="ar",
+            split_sentences=False,
+            temperature=0.65,
+            repetition_penalty=2.0,
+            top_p=0.85,
+            top_k=50,
+            sound_norm_refs=True  # 🔹 مفيش تأثير على الـ API إلا تحسين جودة الصوت
+        )
         if output_file.exists():
             print(f"✅ Audio file generated successfully!")
             print(f"📂 File saved at: output/generated_voice.wav")
@@ -126,4 +126,3 @@ text = """
 
 if __name__ == "__main__":
     main()
-
