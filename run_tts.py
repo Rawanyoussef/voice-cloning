@@ -97,7 +97,8 @@ def main():
     file_path=str(output_file),
     speaker_wav=speaker_wav,
     language="ar",
-    split_sentences=False,
+    split_sentences=True,
+    length_penalty=1.03, # أقل شوية من قبل
     temperature=0.65,
     repetition_penalty=2.0,
     top_p=0.85,
@@ -125,4 +126,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
