@@ -102,7 +102,7 @@ def main():
             language="ar",
 
             # 🔥 Fast & Natural
-            split_sentences=False,     # أهم حاجة
+            split_sentences=true,     # أهم حاجة
             temperature=0.55,          # أقل = أسرع
             repetition_penalty=1.05,   # يمنع التكرار من غير بطء
             length_penalty=0.9,        # ↓ السرعة هنا
@@ -132,3 +132,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
