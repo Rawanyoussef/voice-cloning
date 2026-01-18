@@ -99,9 +99,10 @@ def main():
             file_path=str(output_file),
             speaker_wav=speaker_wav,
             language="ar",
-            split_sentences=False,
+            length_penalty = 1.2,
+            split_sentences=True,
             temperature=0.7,
-            repetition_penalty=1.3,
+            repetition_penalty=1.1,
             top_p=0.85,
             top_k=50,
             sound_norm_refs=True  # 🔹 مفيش تأثير على الـ API إلا تحسين جودة الصوت
@@ -127,5 +128,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
