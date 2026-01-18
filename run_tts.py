@@ -97,6 +97,7 @@ def main():
     file_path=str(output_file),
     speaker_wav=speaker_wav,
     language="ar",
+    speed=1.0,
     split_sentences=True,
     length_penalty=1.03, # أقل شوية من قبل
     temperature=0.65,
@@ -126,5 +127,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
