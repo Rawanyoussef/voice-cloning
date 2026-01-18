@@ -102,7 +102,7 @@ def main():
             language="ar",
 
             # 🔥 Fast & Natural
-            split_sentences=true,     # أهم حاجة
+            split_sentences=True,     # أهم حاجة
             temperature=0.55,          # أقل = أسرع
             repetition_penalty=1.08,   # يمنع التكرار من غير بطء
             length_penalty=0.9,        # ↓ السرعة هنا
