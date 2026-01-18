@@ -92,18 +92,20 @@ def main():
     print(f"⚙️  Processing text using reference voice...")
     
     try:
-        tts.tts_to_file(
+       tts.tts_to_file(
     text=text.strip(),
     file_path=str(output_file),
     speaker_wav=speaker_wav,
     language="ar",
-    split_sentences=False,
-    temperature=0.65,
-    repetition_penalty=2.0,
-    top_p=0.85,
-    top_k=50,
-    sound_norm_refs=True  # 🔹 مفيش تأثير على الـ API إلا تحسين جودة الصوت
-)     
+    
+    # --- الإعدادات السحرية ---
+    split_sentences=True,       # ضروري جداً عشان ياخد "نفس" بين الجمل
+    temperature=0.75,           # دي المسؤول عن "المشاعر". 0.75 بتخلي الصوت مش جامد
+    repetition_penalty=1.0,     # أهم حاجة: خليها 1.0 أو 1.1 بالكتير عشان الكلام يجرى ورا بعضه بنعومة
+    length_penalty=1.0,         # بيحافظ على سرعة الكلام متوازنة
+    top_p=0.85,                 # بيختار احتمالات نطق منطقية
+    top_k=50,                   # بيحسن جودة الصوت
+)
         if output_file.exists():
             print(f"✅ Audio file generated successfully!")
             print(f"📂 File saved at: output/generated_voice.wav")
@@ -125,6 +127,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
